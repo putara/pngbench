@@ -1,0 +1,17 @@
+CC = cl
+AR = link -lib
+CFLAGS = -nologo -c -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -MD -W3 -O2 -Oy- -Zi
+ARFLAGS = -nologo 
+
+OBJS = png.obj pngerror.obj pngget.obj pngmem.obj pngpread.obj pngread.obj pngrio.obj pngrtran.obj pngrutil.obj pngset.obj pngtrans.obj pngwio.obj pngwrite.obj pngwtran.obj pngwutil.obj
+
+all: libpng.lib
+clean:
+	@-erase libpng.lib
+	@-erase $(OBJS)
+
+libpng.lib: $(OBJS)
+	$(AR) $(ARFLAGS) $(OBJS) -out:$@
+
+.c.obj::
+	$(CC) $(CFLAGS) $<

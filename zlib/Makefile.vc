@@ -1,0 +1,17 @@
+CC = cl
+AR = link -lib
+CFLAGS = -nologo -c -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -MD -W3 -O2 -Oy- -Zi
+ARFLAGS = -nologo 
+
+OBJS = adler32.obj compress.obj crc32.obj deflate.obj gzclose.obj gzlib.obj gzread.obj gzwrite.obj infback.obj inflate.obj inftrees.obj inffast.obj trees.obj uncompr.obj zutil.obj
+
+all: zlib.lib
+clean:
+	@-erase zlib.lib
+	@-erase $(OBJS)
+
+zlib.lib: $(OBJS)
+	$(AR) $(ARFLAGS) $(OBJS) -out:$@
+
+.c.obj::
+	$(CC) $(CFLAGS) $<
